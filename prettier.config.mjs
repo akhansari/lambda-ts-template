@@ -5,9 +5,10 @@ const config = {
   semi: false,
   singleQuote: false,
   endOfLine: "lf",
+  printWidth: 100,
   overrides: [
     {
-      files: ["*.json", "*.config.mjs", "*.config.ts", "*.yml"],
+      files: ["*.json", "*.config.mjs", "*.config.ts", "*.yml", "*.yaml"],
       options: {
         tabWidth: 2,
       },
