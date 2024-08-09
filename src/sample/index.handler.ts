@@ -1,8 +1,6 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
 
-const myFunction = async (
-    _: APIGatewayProxyEvent
-): Promise<APIGatewayProxyResult> => {
+const myFunction = async (_: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     await Promise.resolve()
     return {
         statusCode: 200,
