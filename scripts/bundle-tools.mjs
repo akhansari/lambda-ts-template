@@ -7,15 +7,7 @@ export const defaultNodeBundleOptions = {
     platform: "node",
     bundle: true,
     outdir: "./dist",
-    outbase: ".",
-}
-
-/** @type {import("esbuild").BuildOptions} */
-export const defaultBrowserBundleOptions = {
-    platform: "browser",
-    bundle: true,
-    sourcemap: true,
-    outdir: "./dist",
+    outbase: "./src",
 }
 
 /** @type {import("glob").GlobOptions} */
@@ -27,16 +19,7 @@ export const defaultGlobOptions = {
 export async function bundleLambdaHandlers(options) {
     const opt = { ...defaultNodeBundleOptions, ...options }
     if (!("entryPoints" in opt)) {
-        opt.entryPoints = await glob("**/*.handler.ts", defaultGlobOptions)
-    }
-    await build(opt)
-}
-
-/** @param {import("esbuild").BuildOptions} options */
-export async function bundleForBrowser(options) {
-    const opt = { ...defaultBrowserBundleOptions, ...options }
-    if (!("entryPoints" in opt)) {
-        opt.entryPoints = await glob("**/app.ts", defaultGlobOptions)
+        opt.entryPoints = await glob("**/handlers/*/handler.ts", defaultGlobOptions)
     }
     await build(opt)
 }
