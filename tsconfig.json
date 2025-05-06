@@ -1,4 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
-  "extends": "./tsconfig.node.json"
+  "extends": "./tsconfig.node.json",
+  "include": ["./src/", "./scripts/"],
+  "exclude": ["node_modules"]
 }
