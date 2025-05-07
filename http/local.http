@@ -1,0 +1,34 @@
+
+###
+GET http://localhost:3000/hello_world
+
+###
+POST http://localhost:3000/orders
+Content-Type: application/json
+
+{
+    "httpMethod": "GET",
+    "path": "/orders"
+}
+
+###
+POST http://localhost:3000/orders
+Content-Type: application/json
+
+{
+    "httpMethod": "GET",
+    "path": "/orders/1"
+}
+
+###
+POST http://localhost:3000/orders
+Content-Type: application/json
+
+{
+    "httpMethod": "POST",
+    "path": "/orders",
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "body": "{\"title\": \"test\", \"amount\": 42}"
+}

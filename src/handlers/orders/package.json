@@ -1,8 +1,5 @@
 {
   "name": "orders_sample",
   "type": "module",
-  "scripts": {
-    "test": "vitest run",
-    "test:watch": "vitest watch"
-  }
+  "scripts": {}
 }

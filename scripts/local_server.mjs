@@ -24,7 +24,7 @@ app.post("/:lambdaName/:handlerName?", async (c) => {
     const proxyEvent = await c.req.json()
 
     const module = await import(path)
-    const res = await module[handlerName](proxyEvent, {})
+    const res = await module[handlerName || "handler"](proxyEvent, {})
 
     return c.json(res)
 })

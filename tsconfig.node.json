@@ -1,11 +1,14 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "@tsconfig/node22/tsconfig.json",
+  "exclude": ["node_modules", "dist"],
   "compilerOptions": {
     "noEmit": true,
     "allowImportingTsExtensions": true,
     "baseUrl": ".",
-    "outDir": "./dist"
-  },
-  "exclude": ["node_modules/", "dist/"]
+    "paths": {
+      "@handlers/*": ["src/handlers/*"],
+      "@domain/*": ["src/domain/*"]
+    }
+  }
 }

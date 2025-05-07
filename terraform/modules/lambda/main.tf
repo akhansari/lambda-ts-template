@@ -1,3 +1,7 @@
+locals {
+  name = "${var.service_name}_${var.env}_${var.name}"
+}
+
 data "archive_file" "this" {
   type        = "zip"
   source_dir  = "../dist/handlers/${var.name}/"
@@ -17,7 +21,7 @@ data "aws_iam_policy_document" "role" {
 }
 
 resource "aws_iam_role" "this" {
-  name               = "${var.service_name}_${var.env}_${var.name}_role"
+  name               = "${local.name}_role"
   assume_role_policy = data.aws_iam_policy_document.role.json
 }
 
@@ -34,7 +38,7 @@ data "aws_iam_policy_document" "permissions" {
 }
 
 resource "aws_iam_policy" "this" {
-  name   = "${var.service_name}_${var.env}_${var.name}_permissions"
+  name   = "${local.name}_permissions"
   policy = data.aws_iam_policy_document.permissions.json
 }
 
@@ -43,8 +47,13 @@ resource "aws_iam_role_policy_attachment" "this" {
   policy_arn = aws_iam_policy.this.arn
 }
 
+resource "aws_cloudwatch_log_group" "this" {
+  name              = "/aws/lambda/${local.name}"
+  retention_in_days = 7
+}
+
 resource "aws_lambda_function" "this" {
-  function_name    = "${var.service_name}_${var.env}_${var.name}"
+  function_name    = local.name
   handler          = "handler.handler"
   runtime          = "nodejs22.x"
   architectures    = ["arm64"]
@@ -59,5 +68,9 @@ resource "aws_lambda_function" "this" {
       POWERTOOLS_LOG_LEVEL          = "WARN"
     }
   }
+  depends_on = [
+    aws_iam_role_policy_attachment.this,
+    aws_cloudwatch_log_group.this,
+  ]
 }
 
